@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8" />
+    <title>Produits</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<header>
+    <div class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li>
+                   <a th:href="@{/Gestion_stock/list_providers}" >Home
+                    </a>
+                </li>
+
+
+            </ul>
+            
+
+        </div>
+    </div>
+</header>
+<section layout:fragment="content">
+	<div class="container my-5">
+
+			<form th:action="@{/Gestion_stock/list_providers}" method="get">
+				<div class="form-group col-md-8">
+					<label for="Name" class="col-form-label">Name:</label>
+
+					<input type="text" name="mc" />
+
+					<input type="submit" class="btn btn-primary" value="Chercher" />
+				</div>
+
+			</form>
+			<a th:href="@{'add_providers'}" class="btn btn-primary"><i class="fas fa-user-plus ml-2"> Add
+					Provider</i></a>
+		</div>
+		<div class="container my-5">
+			<center>
+				<h3>liste des fournisseurs</h3>
+			</center>
+			<div class="card">
+
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Name</th>
+							<th>Email</th>
+							<th>Address</th>
+							<th>logo</th>
+							<th>phone</th>
+							<th>Details</th>
+							<th>Edit</th>
+							<th>Delete</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="provider : ${providers}">
+							<td th:text="${provider.id}"></td>
+							<td th:text="${provider.name}"></td>
+							<td th:text="${provider.email}"></td>
+							<td th:text="${provider.address}"></td>
+							<td th:text="${provider.logo}"></td>
+							<td th:text="${provider.phone}"></td>
+							<td><a th:href="@{show_providers/{id}(id=${provider.id},page=${pagecourante},size=${size},mc=${mc})}"
+									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i>Details</a></td>
+							<td><a th:href="@{edit_providers/{id}(id=${provider.id},page=${pagecourante},size=${size},mc=${mc})}"
+									class="btn btn-warning"><i class="fas fa-user-edit ml-2"></i></a></td>
+							<td><a onclick="return confirm('Ete vous sur?')"
+									th:href="@{delete_providers/{id}(id=${provider.id},page=${pagecourante},size=${size},mc=${mc})}"
+									class="btn btn-danger"><i class="fas fa-user-times ml-2"></i></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+		</div>
+
+
+		</div>
+		<div class="container">
+			<ul class="nav nav-pills">
+				<li th:class="${pagecourante}==${status.index}?'active':''" th:each="pa,status:${tabpage}">
+					<a th:href="@{list_providers(page=${status.index},size=${size},mc=${mc})}"
+						th:text="${status.index}"></a>
+				</li>
+
+
+			</ul>
+
+
+
+		</div>
+
+
+
+</section>
+<footer class="navbar-fixed-bottom">
+    <hr/>
+    <div class="container">
+        <small>
+            @AKINOBANK
+        </small>
+    </div>
+</footer>
+</body>
+</html>
